@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Início - ADS-POO</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>ADS - POO</h1>
+        <h3>Escolha sua conta matemática!</h3>
+        <form action="mathServlet.html">
+            <label>1ºNúmero</label>
+            <br>
+            <input type="number" name="num1"/>
+            <br>
+            <input type="radio" name="op" value="1" checked="checked">Soma
+            <input type="radio" name="op" value="2">Subtração
+            <input type="radio" name="op" value="3">Multiplicação
+            <input type="radio" name="op" value="4">Divisão
+            <br>
+            <label>2ºNúmero</label>
+            <br>
+            <input type="number" name="num2"/>
+            <br>    
+            <input type="submit" value="Gerar"/>
+        </form>
+        <h3>Números Randômicos</h3>
+        <form action="randomServlet.html">
+            <label>Escolha a quantidade de números randômicos</label>
+            <input type="number" name="num1"/>
+            <input type="submit"/>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <title>Renan Soares</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h2>Renan Soares Ribas</h2>
+        
+        <div id="app" class="container-fluid m-1">
+            Calculo de Juros:
+            <p>
+                Capital:
+                <input type="number" v-model="cap" required>
+            </p>
+            <p>
+                Taxa (Em porcentagem):
+                <input type="number" v-model="tax" required>
+            </p>
+            <p>
+                Periodo:
+                <input type="number" v-model="tmp" required>
+            </p>
+            <div v-if="calculado">
+               <h5>Juros Simples: {{jurosSimples}}</h5>
+            </div>
+            <div v-if="calculado">
+               <h5>Juros Compostos: {{jurosCompostos}}</h5>
+            </div>
+            
+            <button v-on:click="calcularJuros()">Calcular</button>
+        </div>
+        
+        <script>
+          const { createApp } = Vue;
+
+          createApp({
+            data() {
+              return {
+                title: '',
+                calculado: false,
+                jurosSimples: null,
+                jurosCompostos: null,
+                tmp: 0,
+                cap: 0,
+                tax: 0
+              };
+            },
+            methods: {
+                calcJurosSimples(params){
+                    var url = "RenanJurosSimplesServlet.json";
+                    if(params) url += '?' + params;
+                    fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => this.jurosSimples = data.juros)
+                    .catch((e) => this.error = e)
+                    .finally(() => this.calculado = true);
+                },
+                calcularJuros(){
+                    this.calcJurosSimples("cap="+this.cap+"&tax="+this.tax+"&tmp="+this.tmp)
+                    this.calcJurosCompostos("cap="+this.cap+"&tax="+this.tax+"&tmp="+this.tmp)
+                },
+                calcJurosCompostos(params){
+                    var url = "RenanJurosCompostosServlet.json";
+                    if(params) url += '?' + params;
+                    fetch(url)
+                    .then((response) => response.json())
+                    .then((data) => this.jurosCompostos = data.juros)
+                    .catch((e) => this.error = e)
+                    .finally(() => this.calculado = true);
+                }
+            }
+          }).mount('#app');
+        </script>
+    </body>
+</html>
